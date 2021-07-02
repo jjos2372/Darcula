@@ -16,7 +16,6 @@
 package com.bulenkov.darcula.ui;
 
 import sun.awt.SunToolkit;
-import sun.swing.SwingUtilities2;
 
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;
@@ -453,7 +452,7 @@ public class DarculaTitlePane extends JComponent {
 
     String theTitle = getTitle();
     if (theTitle != null) {
-      FontMetrics fm = SwingUtilities2.getFontMetrics(rootPane, g);
+      FontMetrics fm = g.getFontMetrics(g.getFont());
 
       g.setColor(foreground);
 
@@ -470,14 +469,15 @@ public class DarculaTitlePane extends JComponent {
           rect.x = window.getWidth() - window.getInsets().right - 2;
         }
         titleW = rect.x - xOffset - 4;
-        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
+        // BasicGraphicsUtils.getClippedString
+//        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
       } else {
         titleW = xOffset - rect.x - rect.width - 4;
-        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
-        xOffset -= SwingUtilities2.stringWidth(rootPane, fm, theTitle);
+//        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
+        xOffset -= fm.stringWidth(theTitle);
       }
-      int titleLength = SwingUtilities2.stringWidth(rootPane, fm, theTitle);
-      SwingUtilities2.drawString(rootPane, g, theTitle, xOffset, yOffset);
+      int titleLength = fm.stringWidth(theTitle);
+      g.drawString(theTitle, xOffset, yOffset);
     }
   }
 

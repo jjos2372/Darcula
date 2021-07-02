@@ -17,11 +17,11 @@ package com.bulenkov.darcula.ui;
 
 import com.bulenkov.darcula.DarculaUIUtil;
 import com.bulenkov.iconloader.util.*;
-import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.IconUIResource;
+import javax.swing.plaf.basic.BasicGraphicsUtils;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.metal.MetalRadioButtonUI;
 import javax.swing.text.View;
@@ -45,7 +45,7 @@ public class DarculaRadioButtonUI extends MetalRadioButtonUI {
     Dimension size = c.getSize();
     Font f = c.getFont();
     g.setFont(f);
-    FontMetrics fm = SwingUtilities2.getFontMetrics(c, g, f);
+    FontMetrics fm = c.getFontMetrics(f);
 
     Rectangle viewRect = new Rectangle(size);
     Rectangle iconRect = new Rectangle();
@@ -134,7 +134,7 @@ public class DarculaRadioButtonUI extends MetalRadioButtonUI {
           // *** paint the text disabled
           g.setColor(getDisabledTextColor());
         }
-        SwingUtilities2.drawStringUnderlineCharAt(c, g, text,
+        BasicGraphicsUtils.drawStringUnderlineCharAt(g, text,
                                                   mnemIndex, textRect.x, textRect.y + fm.getAscent());
       }
     }

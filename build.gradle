@@ -18,7 +18,14 @@ repositories {
 }
 
 dependencies {
-	implementation group: 'org.jetbrains', name: 'annotations', version: '16.0.3'    
+	// implementation group: 'org.jetbrains', name: 'annotations', version: '16.0.3'   
+	
+	implementation 'com.bulenkov:darcula:2018.2'
+	
+	
+	// https://mvnrepository.com/artifact/com.github.iconloader/icon-loader
+	// implementation group: 'com.github.iconloader', name: 'icon-loader', version: '0.0.3'
+	 
 }
 
 sourceSets {

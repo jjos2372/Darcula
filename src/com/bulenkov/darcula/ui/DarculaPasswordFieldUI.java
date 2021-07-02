@@ -32,7 +32,7 @@ import java.awt.event.FocusListener;
  */
 public class DarculaPasswordFieldUI extends BasicPasswordFieldUI {
 
-  private FocusListener myFocusListener = new FocusAdapter() {
+  private final FocusListener myFocusListener = new FocusAdapter() {
     @Override
     public void focusGained(FocusEvent e) {
       getComponent().repaint();

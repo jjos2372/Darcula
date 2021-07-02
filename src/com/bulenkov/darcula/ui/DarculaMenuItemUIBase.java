@@ -17,6 +17,7 @@
 package com.bulenkov.darcula.ui;
 
 import sun.swing.MenuItemLayoutHelper;
+import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
@@ -139,16 +140,16 @@ public class DarculaMenuItemUIBase extends BasicMenuItemUI {
         // *** paint the accText disabled
         if (disabledForeground != null) {
           g.setColor(disabledForeground);
-          g.drawString(
+          SwingUtilities2.drawString(lh.getMenuItem(), g,
               lh.getAccText(), lr.getAccRect().x,
               lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
         } else {
           g.setColor(lh.getMenuItem().getBackground().brighter());
-          g.drawString(
+          SwingUtilities2.drawString(lh.getMenuItem(), g,
               lh.getAccText(), lr.getAccRect().x,
               lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
           g.setColor(lh.getMenuItem().getBackground().darker());
-          g.drawString(
+          SwingUtilities2.drawString(lh.getMenuItem(), g,
               lh.getAccText(), lr.getAccRect().x - 1,
               lr.getAccRect().y + lh.getFontMetrics().getAscent() - 1);
         }
@@ -161,7 +162,7 @@ public class DarculaMenuItemUIBase extends BasicMenuItemUI {
         } else {
           g.setColor(acceleratorForeground);
         }
-        g.drawString(lh.getAccText(),
+        SwingUtilities2.drawString(lh.getMenuItem(), g, lh.getAccText(),
             lr.getAccRect().x, lr.getAccRect().y +
                 lh.getAccFontMetrics().getAscent());
       }

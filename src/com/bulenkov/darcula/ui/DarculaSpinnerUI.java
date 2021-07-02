@@ -33,7 +33,7 @@ import java.awt.event.FocusEvent;
  * @author Konstantin Bulenkov
  */
 public class DarculaSpinnerUI extends BasicSpinnerUI {
-  private FocusAdapter myFocusListener = new FocusAdapter() {
+  private final FocusAdapter myFocusListener = new FocusAdapter() {
     @Override
     public void focusGained(FocusEvent e) {
       spinner.repaint();
@@ -56,7 +56,7 @@ public class DarculaSpinnerUI extends BasicSpinnerUI {
       if (oldEditor != null && oldEditor.getComponents().length > 0) {
           oldEditor.getComponents()[0].removeFocusListener(myFocusListener);
       }
-      if (newEditor != null && newEditor.getComponents().length > 0) {
+      if (newEditor.getComponents().length > 0) {
           newEditor.getComponents()[0].addFocusListener(myFocusListener);
       }
   }

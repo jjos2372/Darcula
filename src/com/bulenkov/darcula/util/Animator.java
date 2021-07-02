@@ -27,13 +27,11 @@ public abstract class Animator {
   private final static ScheduledExecutorService scheduler = createScheduler();
 
   private static ScheduledExecutorService createScheduler() {
-    ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, new ThreadFactory() {
-      public Thread newThread(final Runnable r) {
-        final Thread thread = new Thread(r, "Darcula Animations");
-        thread.setDaemon(true);
-        thread.setPriority(Thread.NORM_PRIORITY);
-        return thread;
-      }
+    ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, r -> {
+      final Thread thread = new Thread(r, "Darcula Animations");
+      thread.setDaemon(true);
+      thread.setPriority(Thread.NORM_PRIORITY);
+      return thread;
     });
     executor.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
     executor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
@@ -110,11 +108,7 @@ public abstract class Animator {
   private void animationDone() {
     stopTicker();
 
-    SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        paintCycleEnd();
-      }
-    });
+    SwingUtilities.invokeLater(this::paintCycleEnd);
   }
 
   private void stopTicker() {
@@ -141,17 +135,14 @@ public abstract class Animator {
     }
     else if (myTicker == null) {
       myTicker = scheduler.scheduleWithFixedDelay(new Runnable() {
-        AtomicBoolean scheduled = new AtomicBoolean(false);
+        final AtomicBoolean scheduled = new AtomicBoolean(false);
 
         @Override
         public void run() {
           if (scheduled.compareAndSet(false, true) && !isDisposed()) {
-            SwingUtilities.invokeLater(new Runnable() {
-              @Override
-              public void run() {
-                scheduled.set(false);
-                onTick();
-              }
+            SwingUtilities.invokeLater(() -> {
+              scheduled.set(false);
+              onTick();
             });
           }
         }

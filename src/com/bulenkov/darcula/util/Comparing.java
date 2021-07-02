@@ -105,7 +105,7 @@ public class Comparing {
 
     public static boolean equal(String arg1, String arg2, boolean caseSensitive) {
         if (arg1 == null || arg2 == null) {
-            return arg1 == arg2;
+            return Objects.equals(arg1, arg2);
         } else {
             return caseSensitive ? arg1.equals(arg2) : arg1.equalsIgnoreCase(arg2);
         }
@@ -124,7 +124,7 @@ public class Comparing {
             return false;
         }
 
-        Set<T> aSet = new HashSet<T>(a);
+        Set<T> aSet = new HashSet<>(a);
         for (T t : b) {
             if (!aSet.contains(t)) {
                 return false;
@@ -143,7 +143,7 @@ public class Comparing {
             return false;
         }
 
-        Set<T> aSet = new HashSet<T>(Arrays.asList(a));
+        Set<T> aSet = new HashSet<>(Arrays.asList(a));
         for (T t : b) {
             if (!aSet.contains(t)) {
                 return false;
@@ -163,7 +163,7 @@ public class Comparing {
     }
 
     public static int compare(byte o1, byte o2) {
-        return o1 < o2 ? -1 : o1 == o2 ? 0 : 1;
+        return Byte.compare(o1, o2);
     }
 
     public static int compare(boolean o1, boolean o2) {
@@ -171,15 +171,15 @@ public class Comparing {
     }
 
     public static int compare(int o1, int o2) {
-        return o1 < o2 ? -1 : o1 == o2 ? 0 : 1;
+        return Integer.compare(o1, o2);
     }
 
     public static int compare(long o1, long o2) {
-        return o1 < o2 ? -1 : o1 == o2 ? 0 : 1;
+        return Long.compare(o1, o2);
     }
 
     public static int compare(double o1, double o2) {
-        return o1 < o2 ? -1 : o1 == o2 ? 0 : 1;
+        return Double.compare(o1, o2);
     }
 
     public static int compare(byte[] o1, byte[] o2) {

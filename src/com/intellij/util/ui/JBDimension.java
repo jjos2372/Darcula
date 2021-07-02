@@ -35,7 +35,7 @@ public class JBDimension extends Dimension {
 
     public static JBDimension create(Dimension from) {
         if (from instanceof JBDimension) {
-            return ((JBDimension)from);
+            return ((JBDimension) from);
         }
         return new JBDimension(from.width, from.height);
     }

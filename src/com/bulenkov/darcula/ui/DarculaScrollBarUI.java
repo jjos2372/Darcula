@@ -75,12 +75,7 @@ public class DarculaScrollBarUI extends BasicScrollBarUI {
   public static final int FRAMES_COUNT = 10 + DELAY_FRAMES;
 
   protected DarculaScrollBarUI() {
-    myAdjustmentListener = new AdjustmentListener() {
-      @Override
-      public void adjustmentValueChanged(AdjustmentEvent e) {
-        resetAnimator();
-      }
-    };
+    myAdjustmentListener = e -> resetAnimator();
 
     myMouseMotionListener = new MouseMotionAdapter() {
       @Override

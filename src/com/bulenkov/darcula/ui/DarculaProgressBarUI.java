@@ -18,6 +18,7 @@ package com.bulenkov.darcula.ui;
 import com.bulenkov.iconloader.util.DoubleColor;
 import com.bulenkov.iconloader.util.GraphicsUtil;
 import com.bulenkov.iconloader.util.Gray;
+import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -156,11 +157,11 @@ public class DarculaProgressBarUI extends BasicProgressBarUI {
 
     if (progressBar.getOrientation() == SwingConstants.HORIZONTAL) {
       g2.setColor(getSelectionBackground());
-      g2.drawString(progressString,
+      SwingUtilities2.drawString(progressBar, g2, progressString,
                                  renderLocation.x, renderLocation.y);
       g2.setColor(getSelectionForeground());
       g2.clipRect(fillStart, y, amountFull, h);
-      g2.drawString(progressString,
+      SwingUtilities2.drawString(progressBar, g2, progressString,
                                  renderLocation.x, renderLocation.y);
     } else { // VERTICAL
       g2.setColor(getSelectionBackground());
@@ -169,11 +170,11 @@ public class DarculaProgressBarUI extends BasicProgressBarUI {
       g2.setFont(progressBar.getFont().deriveFont(rotate));
       renderLocation = getStringPlacement(g2, progressString,
                                           x, y, w, h);
-      g2.drawString(progressString,
+      SwingUtilities2.drawString(progressBar, g2, progressString,
                                  renderLocation.x, renderLocation.y);
       g2.setColor(getSelectionForeground());
       g2.clipRect(x, fillStart, w, amountFull);
-      g2.drawString(progressString,
+      SwingUtilities2.drawString(progressBar, g2, progressString,
                                  renderLocation.x, renderLocation.y);
     }
     g2.setClip(oldClip);

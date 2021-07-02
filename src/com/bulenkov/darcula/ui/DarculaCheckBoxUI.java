@@ -20,11 +20,11 @@ import com.bulenkov.iconloader.util.EmptyIcon;
 import com.bulenkov.iconloader.util.GraphicsConfig;
 import com.bulenkov.iconloader.util.Gray;
 import com.bulenkov.iconloader.util.UIUtil;
+import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.IconUIResource;
-import javax.swing.plaf.basic.BasicGraphicsUtils;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.metal.MetalCheckBoxUI;
 import javax.swing.text.View;
@@ -51,7 +51,7 @@ public class DarculaCheckBoxUI extends MetalCheckBoxUI {
     final Font font = c.getFont();
 
     g.setFont(font);
-    FontMetrics fm = c.getFontMetrics(font);
+    FontMetrics fm = SwingUtilities2.getFontMetrics(c, g, font);
 
     Rectangle viewRect = new Rectangle(size);
     Rectangle iconRect = new Rectangle();
@@ -134,7 +134,7 @@ public class DarculaCheckBoxUI extends MetalCheckBoxUI {
         view.paint(g, textRect);
       } else {
         g.setColor(model.isEnabled() ? b.getForeground() : getDisabledTextColor());
-        BasicGraphicsUtils.drawStringUnderlineCharAt(g, text,
+        SwingUtilities2.drawStringUnderlineCharAt(c, g, text,
                                                   b.getDisplayedMnemonicIndex(),
                                                   textRect.x,
                                                   textRect.y + fm.getAscent());

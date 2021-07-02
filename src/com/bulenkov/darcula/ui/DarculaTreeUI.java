@@ -288,7 +288,7 @@ public class DarculaTreeUI extends BasicTreeUI {
     if (a == null) {
       return b == null;
     } else {
-      return b != null && a.equals(b);
+      return a.equals(b);
     }
   }
 

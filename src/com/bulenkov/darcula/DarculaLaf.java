@@ -21,7 +21,6 @@ import com.bulenkov.iconloader.util.ColorUtil;
 import com.bulenkov.iconloader.util.EmptyIcon;
 import com.bulenkov.iconloader.util.StringUtil;
 import com.bulenkov.iconloader.util.SystemInfo;
-
 import sun.awt.AppContext;
 
 import javax.swing.*;
@@ -101,8 +100,9 @@ public final class DarculaLaf extends BasicLookAndFeel {
       defaults.put("CheckBoxMenuItem.checkIcon", EmptyIcon.create(16));
       defaults.put("RadioButtonMenuItem.checkIcon", EmptyIcon.create(16));
       defaults.put("InternalFrame.icon", new IconUIResource(IconLoader.getIcon("/com/bulenkov/darcula/icons/internalFrame.png")));
-      defaults.put("OptionPane.informationIcon", new IconUIResource(IconLoader.getIcon("/com/bulenkov/darcula/icons/option_pane_info.png")));
-      defaults.put("OptionPane.questionIcon", new IconUIResource(IconLoader.getIcon("/com/bulenkov/darcula/icons/option_pane_question.png")));
+      Icon infoIcon =IconLoader.getIcon("/com/bulenkov/darcula/icons/option_pane_info.png");
+      defaults.put("OptionPane.informationIcon", new IconUIResource(infoIcon));
+      defaults.put("OptionPane.questionIcon", new IconUIResource(infoIcon));
       defaults.put("OptionPane.warningIcon", new IconUIResource(IconLoader.getIcon("/com/bulenkov/darcula/icons/option_pane_warning.png")));
       defaults.put("OptionPane.errorIcon", new IconUIResource(IconLoader.getIcon("/com/bulenkov/darcula/icons/option_pane_error.png")));
       if (SystemInfo.isMac && !"true".equalsIgnoreCase(System.getProperty("apple.laf.useScreenMenuBar", "false"))) {
@@ -225,7 +225,7 @@ public final class DarculaLaf extends BasicLookAndFeel {
       properties.load(stream);
       stream.close();
 
-      HashMap<String, Object> darculaGlobalSettings = new HashMap<String, Object>();
+      HashMap<String, Object> darculaGlobalSettings = new HashMap<>();
       final String prefix = "darcula.";
       for (String key : properties.stringPropertyNames()) {
         if (key.startsWith(prefix)) {

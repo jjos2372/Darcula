@@ -62,7 +62,7 @@ public class JBUI {
 
     public static void setScaleFactor(float scale) {
         final String hidpi = System.getProperty("hidpi");
-        if (hidpi != null && "false".equalsIgnoreCase(hidpi)) {
+        if ("false".equalsIgnoreCase(hidpi)) {
             return;
         }
 

@@ -18,14 +18,13 @@ package com.bulenkov.darcula.ui;
 import com.bulenkov.iconloader.util.SystemInfo;
 import com.bulenkov.iconloader.util.GraphicsConfig;
 import com.bulenkov.iconloader.util.GraphicsUtil;
+import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.plaf.basic.BasicGraphicsUtils;
-
 import java.awt.*;
 
 /**
@@ -77,21 +76,21 @@ public class DarculaButtonUI extends BasicButtonUI {
     }
     g.setColor(fg);
 
-    FontMetrics metrics = c.getFontMetrics(g.getFont());
+    FontMetrics metrics = SwingUtilities2.getFontMetrics(c, g);
     int mnemonicIndex = button.getDisplayedMnemonicIndex();
     if (model.isEnabled()) {
 
-      BasicGraphicsUtils.drawStringUnderlineCharAt(g, text, mnemonicIndex,
+      SwingUtilities2.drawStringUnderlineCharAt(c, g, text, mnemonicIndex,
                                                 textRect.x + getTextShiftOffset(),
                                                 textRect.y + metrics.getAscent() + getTextShiftOffset());
     }
     else {
       g.setColor(UIManager.getColor("Button.darcula.disabledText.shadow"));
-      BasicGraphicsUtils.drawStringUnderlineCharAt(g, text, -1,
+      SwingUtilities2.drawStringUnderlineCharAt(c, g, text, -1,
                                                 textRect.x + getTextShiftOffset()+1,
                                                 textRect.y + metrics.getAscent() + getTextShiftOffset()+1);
       g.setColor(UIManager.getColor("Button.disabledText"));
-      BasicGraphicsUtils.drawStringUnderlineCharAt(g, text, -1,
+      SwingUtilities2.drawStringUnderlineCharAt(c, g, text, -1,
                                                 textRect.x + getTextShiftOffset(),
                                                 textRect.y + metrics.getAscent() + getTextShiftOffset());
 

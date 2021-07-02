@@ -52,14 +52,13 @@ public class DarculaTitlePane extends JComponent {
   private Image mySystemIcon;
   private WindowListener myWindowListener;
   private Window myWindow;
-  private JRootPane myRootPane;
+  private final JRootPane myRootPane;
   private int myState;
-  private DarculaRootPaneUI rootPaneUI;
+  private final DarculaRootPaneUI rootPaneUI;
 
-
-  private Color myInactiveBackground = UIManager.getColor("inactiveCaption");
-  private Color myInactiveForeground = UIManager.getColor("inactiveCaptionText");
-  private Color myInactiveShadow = UIManager.getColor("inactiveCaptionBorder");
+  private final Color myInactiveBackground = UIManager.getColor("inactiveCaption");
+  private final Color myInactiveForeground = UIManager.getColor("inactiveCaptionText");
+  private final Color myInactiveShadow = UIManager.getColor("inactiveCaptionBorder");
   private Color myActiveBackground = null;
   private Color myActiveForeground = null;
   private Color myActiveShadow = null;
@@ -123,9 +122,8 @@ public class DarculaTitlePane extends JComponent {
     myWindow = SwingUtilities.getWindowAncestor(this);
     if (myWindow != null) {
       if (myWindow instanceof Frame) {
-        setState(((Frame)myWindow).getExtendedState());
-      }
-      else {
+        setState(((Frame) myWindow).getExtendedState());
+      } else {
         setState(0);
       }
       setActive(myWindow.isActive());
@@ -151,14 +149,13 @@ public class DarculaTitlePane extends JComponent {
       add(myIconifyButton);
       add(myToggleButton);
       add(myCloseButton);
-    }
-    else if (decorationStyle == JRootPane.PLAIN_DIALOG ||
-             decorationStyle == JRootPane.INFORMATION_DIALOG ||
-             decorationStyle == JRootPane.ERROR_DIALOG ||
-             decorationStyle == JRootPane.COLOR_CHOOSER_DIALOG ||
-             decorationStyle == JRootPane.FILE_CHOOSER_DIALOG ||
-             decorationStyle == JRootPane.QUESTION_DIALOG ||
-             decorationStyle == JRootPane.WARNING_DIALOG) {
+    } else if (decorationStyle == JRootPane.PLAIN_DIALOG ||
+      decorationStyle == JRootPane.INFORMATION_DIALOG ||
+      decorationStyle == JRootPane.ERROR_DIALOG ||
+      decorationStyle == JRootPane.COLOR_CHOOSER_DIALOG ||
+      decorationStyle == JRootPane.FILE_CHOOSER_DIALOG ||
+      decorationStyle == JRootPane.QUESTION_DIALOG ||
+      decorationStyle == JRootPane.WARNING_DIALOG) {
       createActions();
       createButtons();
       add(myCloseButton);
@@ -203,7 +200,6 @@ public class DarculaTitlePane extends JComponent {
     setFont(UIManager.getFont("InternalFrame.titleFont", getLocale()));
   }
 
-
   protected JMenuBar createMenuBar() {
     myMenuBar = new SystemMenuBar();
     myMenuBar.setFocusable(false);
@@ -216,8 +212,7 @@ public class DarculaTitlePane extends JComponent {
     Window window = getWindow();
 
     if (window != null) {
-      window.dispatchEvent(new WindowEvent(
-        window, WindowEvent.WINDOW_CLOSING));
+      window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
     }
   }
 
@@ -244,8 +239,7 @@ public class DarculaTitlePane extends JComponent {
 
     if ((myState & Frame.ICONIFIED) != 0) {
       frame.setExtendedState(myState & ~Frame.ICONIFIED);
-    }
-    else {
+    } else {
       frame.setExtendedState(myState & ~Frame.MAXIMIZED_BOTH);
     }
   }
@@ -310,11 +304,11 @@ public class DarculaTitlePane extends JComponent {
   }
 
   private void setActive(boolean active) {
-    myCloseButton.putClientProperty("paintActive", Boolean.valueOf(active));
+    myCloseButton.putClientProperty("paintActive", active);
 
     if (getWindowDecorationStyle() == JRootPane.FRAME) {
-      myIconifyButton.putClientProperty("paintActive", Boolean.valueOf(active));
-      myToggleButton.putClientProperty("paintActive", Boolean.valueOf(active));
+      myIconifyButton.putClientProperty("paintActive", active);
+      myToggleButton.putClientProperty("paintActive", active);
     }
 
     getRootPane().repaint();
@@ -337,12 +331,10 @@ public class DarculaTitlePane extends JComponent {
         JRootPane rootPane = getRootPane();
 
         if (((state & Frame.MAXIMIZED_BOTH) != 0) &&
-            (rootPane.getBorder() == null ||
-             (rootPane.getBorder() instanceof UIResource)) &&
-            frame.isShowing()) {
+          (rootPane.getBorder() == null || (rootPane.getBorder() instanceof UIResource)) &&
+          frame.isShowing()) {
           rootPane.setBorder(null);
-        }
-        else if ((state & Frame.MAXIMIZED_BOTH) == 0) {
+        } else if ((state & Frame.MAXIMIZED_BOTH) == 0) {
           // This is a croak, if state becomes bound, this can
           // be nuked.
           rootPaneUI.installBorder(rootPane);
@@ -352,22 +344,19 @@ public class DarculaTitlePane extends JComponent {
             updateToggleButton(myRestoreAction, myMinimizeIcon);
             myMaximizeAction.setEnabled(false);
             myRestoreAction.setEnabled(true);
-          }
-          else {
+          } else {
             updateToggleButton(myMaximizeAction, myMaximizeIcon);
             myMaximizeAction.setEnabled(true);
             myRestoreAction.setEnabled(false);
           }
-          if (myToggleButton.getParent() == null ||
-              myIconifyButton.getParent() == null) {
+          if (myToggleButton.getParent() == null || myIconifyButton.getParent() == null) {
             add(myToggleButton);
             add(myIconifyButton);
             revalidate();
             repaint();
           }
           myToggleButton.setText(null);
-        }
-        else {
+        } else {
           myMaximizeAction.setEnabled(false);
           myRestoreAction.setEnabled(false);
           if (myToggleButton.getParent() != null) {
@@ -376,8 +365,7 @@ public class DarculaTitlePane extends JComponent {
             repaint();
           }
         }
-      }
-      else {
+      } else {
         // Not contained in a Frame
         myMaximizeAction.setEnabled(false);
         myRestoreAction.setEnabled(false);
@@ -402,7 +390,7 @@ public class DarculaTitlePane extends JComponent {
     Window window = getWindow();
 
     if (window instanceof Frame) {
-      return (Frame)window;
+      return (Frame) window;
     }
     return null;
   }
@@ -415,10 +403,9 @@ public class DarculaTitlePane extends JComponent {
     Window w = getWindow();
 
     if (w instanceof Frame) {
-      return ((Frame)w).getTitle();
-    }
-    else if (w instanceof Dialog) {
-      return ((Dialog)w).getTitle();
+      return ((Frame) w).getTitle();
+    } else if (w instanceof Dialog) {
+      return ((Dialog) w).getTitle();
     }
     return null;
   }
@@ -429,10 +416,10 @@ public class DarculaTitlePane extends JComponent {
     }
     JRootPane rootPane = getRootPane();
     Window window = getWindow();
-    boolean leftToRight = (window == null) ?
-                          rootPane.getComponentOrientation().isLeftToRight() :
-                          window.getComponentOrientation().isLeftToRight();
-    boolean isSelected = (window == null) ? true : window.isActive();
+    boolean leftToRight = window == null ?
+      rootPane.getComponentOrientation().isLeftToRight() :
+      window.getComponentOrientation().isLeftToRight();
+    boolean isSelected = window == null || window.isActive();
     int width = getWidth();
     int height = getHeight();
 
@@ -444,8 +431,7 @@ public class DarculaTitlePane extends JComponent {
       background = myActiveBackground;
       foreground = myActiveForeground;
       darkShadow = myActiveShadow;
-    }
-    else {
+    } else {
       background = myInactiveBackground;
       foreground = myInactiveForeground;
       darkShadow = myInactiveShadow;
@@ -484,18 +470,14 @@ public class DarculaTitlePane extends JComponent {
           rect.x = window.getWidth() - window.getInsets().right - 2;
         }
         titleW = rect.x - xOffset - 4;
-        theTitle = SwingUtilities2.clipStringIfNecessary(
-          rootPane, fm, theTitle, titleW);
-      }
-      else {
+        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
+      } else {
         titleW = xOffset - rect.x - rect.width - 4;
-        theTitle = SwingUtilities2.clipStringIfNecessary(
-          rootPane, fm, theTitle, titleW);
+        theTitle = SwingUtilities2.clipStringIfNecessary(rootPane, fm, theTitle, titleW);
         xOffset -= SwingUtilities2.stringWidth(rootPane, fm, theTitle);
       }
       int titleLength = SwingUtilities2.stringWidth(rootPane, fm, theTitle);
       SwingUtilities2.drawString(rootPane, g, theTitle, xOffset, yOffset);
-      xOffset += leftToRight ? titleLength + 5 : -5;
     }
   }
 
@@ -509,7 +491,6 @@ public class DarculaTitlePane extends JComponent {
     }
   }
 
-
   private class IconifyAction extends AbstractAction {
     public IconifyAction() {
       super(UIManager.getString("DarculaTitlePane.iconifyTitle", getLocale()));
@@ -520,18 +501,15 @@ public class DarculaTitlePane extends JComponent {
     }
   }
 
-
   private class RestoreAction extends AbstractAction {
     public RestoreAction() {
-      super(UIManager.getString
-        ("DarculaTitlePane.restoreTitle", getLocale()));
+      super(UIManager.getString("DarculaTitlePane.restoreTitle", getLocale()));
     }
 
     public void actionPerformed(ActionEvent e) {
       restore();
     }
   }
-
 
   private class MaximizeAction extends AbstractAction {
     public MaximizeAction() {
@@ -543,7 +521,6 @@ public class DarculaTitlePane extends JComponent {
     }
   }
 
-
   private class SystemMenuBar extends JMenuBar {
     public void paint(Graphics g) {
       if (isOpaque()) {
@@ -553,8 +530,7 @@ public class DarculaTitlePane extends JComponent {
 
       if (mySystemIcon != null) {
         g.drawImage(mySystemIcon, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
-      }
-      else {
+      } else {
         Icon icon = UIManager.getIcon("InternalFrame.icon");
 
         if (icon != null) {
@@ -570,8 +546,7 @@ public class DarculaTitlePane extends JComponent {
     public Dimension getPreferredSize() {
       Dimension size = super.getPreferredSize();
 
-      return new Dimension(Math.max(IMAGE_WIDTH, size.width),
-                           Math.max(size.height, IMAGE_HEIGHT));
+      return new Dimension(Math.max(IMAGE_WIDTH, size.width), Math.max(size.height, IMAGE_HEIGHT));
     }
   }
 
@@ -606,8 +581,8 @@ public class DarculaTitlePane extends JComponent {
 
     public void layoutContainer(Container c) {
       boolean leftToRight = (myWindow == null) ?
-                            getRootPane().getComponentOrientation().isLeftToRight() :
-                            myWindow.getComponentOrientation().isLeftToRight();
+        getRootPane().getComponentOrientation().isLeftToRight() :
+        myWindow.getComponentOrientation().isLeftToRight();
 
       int w = getWidth();
       int x;
@@ -619,12 +594,10 @@ public class DarculaTitlePane extends JComponent {
       if (myCloseButton != null && myCloseButton.getIcon() != null) {
         buttonHeight = myCloseButton.getIcon().getIconHeight();
         buttonWidth = myCloseButton.getIcon().getIconWidth();
-      }
-      else {
+      } else {
         buttonHeight = IMAGE_HEIGHT;
         buttonWidth = IMAGE_WIDTH;
       }
-
 
       x = leftToRight ? w : 0;
 
@@ -644,8 +617,7 @@ public class DarculaTitlePane extends JComponent {
       if (!leftToRight) x += buttonWidth;
 
       if (getWindowDecorationStyle() == JRootPane.FRAME) {
-        if (Toolkit.getDefaultToolkit().isFrameStateSupported(
-          Frame.MAXIMIZED_BOTH)) {
+        if (Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH)) {
           if (myToggleButton.getParent() != null) {
             spacing = 10;
             x += leftToRight ? -spacing - buttonWidth : spacing;
@@ -668,7 +640,6 @@ public class DarculaTitlePane extends JComponent {
     }
   }
 
-
   private class PropertyChangeHandler implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent pce) {
       String name = pce.getPropertyName();
@@ -682,15 +653,12 @@ public class DarculaTitlePane extends JComponent {
         if ("resizable".equals(name)) {
           getRootPane().repaint();
         }
-      }
-      else if ("title".equals(name)) {
+      } else if ("title".equals(name)) {
         repaint();
-      }
-      else if ("componentOrientation" == name) {
+      } else if ("componentOrientation".equals(name)) {
         revalidate();
         repaint();
-      }
-      else if ("iconImage" == name) {
+      } else if ("iconImage".equals(name)) {
         updateSystemIcon();
         revalidate();
         repaint();
